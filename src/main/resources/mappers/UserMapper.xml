@@ -1,1 +1,33 @@
 <?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.nongguin.model.dao.UserDao">
+<insert id="signUp" parameterType="User">
+	INSERT INTO users(userName,userEmail,userPass,userGender,userAddress,userPhone)
+	VALUES (#{userName},#{userEmail},#{userPass},#{userGender},#{userAddress},#{userPhone})
+</insert>
+
+<select id="signIn" parameterType="User" resultType="User">
+	SELECT *
+	FROM users
+	WHERE userEmail = #{userEmail}
+</select>
+
+<delete id="deleteUser" parameterType="String">
+	DELETE FROM users
+	WHERE userId = #{userId}
+</delete>
+
+<select id="getUserByUserId" parameterType="String" resultType="User">
+	SELECT *
+	FROM users
+	WHERE userId = #{userId}
+</select>
+
+<update id="modifyUser" parameterType="User" >
+	UPDATE users
+	SET userPhone = #{userPhone} , userPass=#{userPass}, userAddress=#{userAddress}
+	WHERE userId = #{userId}
+</update>
+</mapper>

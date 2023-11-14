@@ -1,4 +1,4 @@
-package com.nongguin.model.dao;
+package com.nongguin.model.service;
 
 import java.util.Date;
 import java.util.List;
@@ -6,7 +6,7 @@ import java.util.List;
 import com.nongguin.model.dto.Match;
 import com.nongguin.model.dto.SearchCondition;
 
-public interface MatchDao {
+public interface MatchService {
 
 	List<Match> getMatchsByDay(Date matchDate);
 
@@ -21,7 +21,5 @@ public interface MatchDao {
 	int getCourtCapacity(int matchId);
 
 	int getMatchApplicantCnt(int matchId);
-
-	int plusApplicantCnt(int matchId);
 
 }

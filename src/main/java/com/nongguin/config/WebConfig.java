@@ -18,7 +18,6 @@ public class WebConfig implements WebMvcConfigurer{
 		registry.addResourceHandler("/swagger-ui/**").addResourceLocations("classpath:/META-INF/resources/webjars/springfox-swagger-ui/");
 	}
 	
-	//등록할 인터셉터 있다면...
 	//필드 통해 의존성 주입 받고
 	@Override
 	public void addInterceptors(InterceptorRegistry registry) {
@@ -31,5 +30,4 @@ public class WebConfig implements WebMvcConfigurer{
 	public void addCorsMappings(CorsRegistry registry) {
 		registry.addMapping("/**").allowedMethods("GET", "POST");
 	}
-	
 }

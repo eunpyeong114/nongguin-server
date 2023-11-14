@@ -5,11 +5,11 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
-import springfox.documentation.swagger2.annotations.EnableSwagger2;
+import springfox.documentation.oas.annotations.EnableOpenApi;
 
 @SpringBootApplication
-@EnableSwagger2
-//@MapperScan("com.nongguin.model.dao")
+@EnableOpenApi
+@MapperScan(basePackages = "com.nongguin.model.dao")
 public class NongguinServerApplication implements WebMvcConfigurer {
 
 	public static void main(String[] args) {

@@ -1,1 +1,79 @@
 <?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.nongguin.model.dao.MatchDao">
+
+	<select id="getMatchsByDay" parameterType="Date"
+		resultType="Match">
+		SELECT *
+		FROM matchs
+		WHERE matchDate = #{matchDate};
+	</select>
+
+	<select id="getMatchsBySearchCondition"
+		parameterType="SearchCondition" resultType="Match">
+		SELECT *
+		FROM matchs m
+		LEFT INNER JOIN courts c
+		ON m.matchDate = #{date}
+		<where>
+			<if test="region != 'none'">
+				c.courtAddress LIKE concat("%",#{region},"%")
+			</if>
+			<if test="gender != 'none'">
+				AND m.matchGender = #{gender}
+			</if>
+			<if test="level != 0">
+				AND m.matchLevel = #{level}
+			</if>
+		</where>
+	</select>
+
+	<select id="getMatchBymatchId" parameterType="int"
+		resultType="Match">
+		SELECT *
+		FROM matchs
+		WHERE matchId = #{matchId}
+	</select>
+
+	<select id="getMatchsByUserId" parameterType="int"
+		resultType="Match">
+		SELECT *
+		FROM matchs
+		WHERE matchs.matchId = (SELECT matchId FROM match_user WHERE userId =
+		#{userId})
+	</select>
+
+	<select id="getRemainingMatchsByUserId" parameterType="int"
+		resultType="Match">
+		SELECT *
+		FROM matchs
+		WHERE matchs.matchId = (SELECT matchId FROM match_user WHERE userId =
+		#{userId})
+		AND DATEDIFF(matchs.matchDate, Now()) >=0
+		AND TIMEDIFF(SELECT operationHourStart FROM operationHour WHERE
+		operationHour.operationHourId = matchs.operationHourId,now())>=0
+	</select>
+
+	<select id="getCourtCapacity" parameterType="int"
+		resultType="int">
+		SELECT courtCapacity
+		FROM courts
+		WHERE courtId = (SELECT courtId
+							FROM matchs
+							WHERE matchId = #{matchId})
+	</select>
+	
+	<select id="getMatchApplicantCnt" parameterType="int" resultType="int">
+		SELECT matchApplicantCnt
+		FROM matchs
+		WHERE matchId = #{matchId}
+	</select>
+	
+	<update id="plusApplicantCnt" parameterType="int">
+		UPDATE matchs
+		SET matchApplicantCnt = matchApplicantCnt+1
+		WHERE matchId = #{matchId}
+	</update>
+</mapper>
