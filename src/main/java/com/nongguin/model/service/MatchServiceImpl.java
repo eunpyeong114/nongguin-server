@@ -4,13 +4,13 @@ import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Configuration;
+import org.springframework.stereotype.Service;
 
 import com.nongguin.model.dao.MatchDao;
 import com.nongguin.model.dto.Match;
 import com.nongguin.model.dto.SearchCondition;
 
-@Configuration
+@Service
 public class MatchServiceImpl implements MatchService {
 	@Autowired
 	MatchDao matchDao;

@@ -14,12 +14,12 @@
 	WHERE userEmail = #{userEmail}
 </select>
 
-<delete id="deleteUser" parameterType="String">
+<delete id="deleteUser" parameterType="int">
 	DELETE FROM users
 	WHERE userId = #{userId}
 </delete>
 
-<select id="getUserByUserId" parameterType="String" resultType="User">
+<select id="getUserByUserId" parameterType="int" resultType="User">
 	SELECT *
 	FROM users
 	WHERE userId = #{userId}

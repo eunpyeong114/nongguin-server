@@ -1,13 +1,12 @@
 package com.nongguin.model.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Configuration;
-import org.springframework.transaction.annotation.Transactional;
+import org.springframework.stereotype.Service;
 
 import com.nongguin.model.dao.UserDao;
 import com.nongguin.model.dto.User;
 
-@Configuration
+@Service
 public class UserServiceImpl implements UserService {
 
 	@Autowired
@@ -28,7 +27,7 @@ public class UserServiceImpl implements UserService {
 	}
 
 	@Override
-	public boolean deleteUser(String userId) {
+	public boolean deleteUser(int userId) {
 		int result = userDao.deleteUser(userId);
 		if (result > 0)
 			return true;
@@ -36,7 +35,7 @@ public class UserServiceImpl implements UserService {
 	}
 
 	@Override
-	public User getUserByUserId(String userId) {
+	public User getUserByUserId(int userId) {
 		return userDao.getUserByUserId(userId);
 	}
 

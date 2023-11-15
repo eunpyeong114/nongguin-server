@@ -12,8 +12,12 @@ import com.nongguin.model.dto.Payment;
 import com.nongguin.model.service.MatchService;
 import com.nongguin.model.service.PaymentService;
 
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
+
 @RestController
 @RequestMapping("/payment")
+@Api(tags = "결제 컨트롤러")
 public class PaymentController {
 	@Autowired
 	PaymentService paymentService;
@@ -23,6 +27,7 @@ public class PaymentController {
 
 	// 매치 결제
 	@PostMapping("/payment")
+	@ApiOperation("매치 결제")
 	public ResponseEntity<String> payForMatch(@RequestBody Payment payment, int userId, int matchId) {
 		// 농구장 최대수용인원
 		int courtCapacity = matchService.getCourtCapacity(matchId);
@@ -43,6 +48,7 @@ public class PaymentController {
 	
 	// 매치 결제 취소
 //	@PostMapping("/payment/cancel")
+//	@ApiOperation("매치 결제 취소")
 //	public ResponseEntity<String> cancelPayment(){
 //		
 //	}

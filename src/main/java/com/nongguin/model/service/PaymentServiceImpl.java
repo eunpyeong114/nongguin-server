@@ -1,16 +1,15 @@
 package com.nongguin.model.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Configuration;
+import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.nongguin.model.dao.MatchDao;
 import com.nongguin.model.dao.Match_UserDao;
 import com.nongguin.model.dao.PaymentDao;
-import com.nongguin.model.dto.Match;
 import com.nongguin.model.dto.Payment;
 
-@Configuration
+@Service
 public class PaymentServiceImpl implements PaymentService {
 
 	@Autowired

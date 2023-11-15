@@ -8,9 +8,9 @@ public interface UserDao {
 
 	User signIn(User user);
 
-	int deleteUser(String userId);
+	int deleteUser(int userId);
 
-	User getUserByUserId(String userId);
+	User getUserByUserId(int userId);
 
 	int modifyUser(User user);
 

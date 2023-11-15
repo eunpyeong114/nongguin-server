@@ -39,6 +39,7 @@ public class MatchController {
 
 	// 검색 조건별 매치 정보 조회
 	@GetMapping("/search/condition")
+	@ApiOperation("검색 조건별 매치 정보 조회")
 	public ResponseEntity<?> getMatchsBySearchCondition(@RequestBody SearchCondition condition) {
 		List<Match> list = matchService.getMatchsBySearchCondition(condition);
 		if(list == null || list.size()==0)
@@ -48,6 +49,7 @@ public class MatchController {
 	
 	// 매치 상세 정보 조회
 	@GetMapping("/search/{matchId}")
+	@ApiOperation("매치 상세 정보 조회")
 	public ResponseEntity<?> getMatchByMatchId(@PathVariable(value="matchId")int matchId){
 		Match match = matchService.getMatchByMatchId(matchId);
 		if(match == null)
@@ -61,6 +63,7 @@ public class MatchController {
 
 	// 매치 이용 전체 내역 조회 (유저별)
 	@GetMapping("/search/{userId}")
+	@ApiOperation("매치 전체 내역 조회")
 	public ResponseEntity<?> getMatchsByUserId(@PathVariable(value="userId")int userId){
 		List<Match>list = matchService.getMatchsByUserId(userId);
 		if(list == null || list.size()==0)
@@ -70,6 +73,7 @@ public class MatchController {
 	
 	// 매치 예약 내역 조회
 	@GetMapping("/search/reserve/{userId}")
+	@ApiOperation("매치 예약 내역 조회")
 	public ResponseEntity<?> getRemainingMatchsByUserId(@PathVariable(value="userId")int userId){
 		List<Match>list = matchService.getRemainingMatchsByUserId(userId);
 		if(list ==null || list.size()==0)

@@ -7,9 +7,9 @@ public interface UserService {
 
 	User signIn(User user);
 
-	boolean deleteUser(String userId);
+	boolean deleteUser(int userId);
 
-	User getUserByUserId(String userId);
+	User getUserByUserId(int userId);
 
 	boolean modifyUser(User user);
 }

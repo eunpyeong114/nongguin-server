@@ -1,5 +1,5 @@
 package com.nongguin.model.service;
 
-public interface courtService {
+public interface CourtService {
 
 }

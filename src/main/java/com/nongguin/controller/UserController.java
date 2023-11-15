@@ -63,7 +63,7 @@ public class UserController {
 	// 회원탈퇴
 	@DeleteMapping("/{userId}")
 	@ApiOperation("회원탈퇴")
-	public ResponseEntity<String> deleteUser(@PathVariable(value = "userId") String userId) {
+	public ResponseEntity<String> deleteUser(@PathVariable(value = "userId") int userId) {
 		boolean result = userService.deleteUser(userId);
 		if (!result)
 			return new ResponseEntity<String>("false", HttpStatus.NOT_ACCEPTABLE);
@@ -73,7 +73,7 @@ public class UserController {
 	// 회원정보조회
 	@GetMapping("/{userId}")
 	@ApiOperation("회원정보조회")
-	public ResponseEntity<?> getUserByUserId(@PathVariable(value = "userId") String userId){
+	public ResponseEntity<?> getUserByUserId(@PathVariable(value = "userId") int userId){
 		User user = userService.getUserByUserId(userId);
 		if(user==null)
 			return new ResponseEntity<Void>(HttpStatus.NO_CONTENT);
