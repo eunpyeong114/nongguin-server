@@ -14,4 +14,6 @@ public interface UserDao {
 
 	int modifyUser(User user);
 
+	User getUserByEmail(String userEmail);
+
 }

@@ -15,7 +15,6 @@ public class UserServiceImpl implements UserService {
 	@Override
 	public Boolean signUp(User user) {
 		int result = userDao.signUp(user);
-		System.out.println(3/0);
 		if (result > 0)
 			return true;
 		return false;
@@ -45,6 +44,12 @@ public class UserServiceImpl implements UserService {
 		if (result > 0)
 			return true;
 		return false;
+	}
+
+	@Override
+	public User getUserByEmail(String userEmail) {
+		User user = userDao.getUserByEmail(userEmail);
+		return user;
 	}
 
 }

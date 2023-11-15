@@ -90,5 +90,14 @@ public class UserController {
 		return new ResponseEntity<String>("true",HttpStatus.OK);
 	}
 	
+	// 이메일로 유저 조회
+	@GetMapping("/{userEmail}")
+	@ApiOperation("이메일로 유저정보 조회")
+	public ResponseEntity<?>getUserByUserEmail(@PathVariable(value = "userEmail") String userEmail){
+		User user = userService.getUserByEmail(userEmail);
+		if(user==null)
+			return new ResponseEntity<String>("no user",HttpStatus.NO_CONTENT);
+		return new ResponseEntity<User>(user,HttpStatus.OK);
+	}
 	// 비밀번호 재등록
 }

@@ -12,4 +12,6 @@ public interface UserService {
 	User getUserByUserId(int userId);
 
 	boolean modifyUser(User user);
+	
+	User getUserByEmail(String userEmail);
 }

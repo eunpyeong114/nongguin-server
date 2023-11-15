@@ -30,4 +30,10 @@
 	SET userPhone = #{userPhone} , userPass=#{userPass}, userAddress=#{userAddress}
 	WHERE userId = #{userId}
 </update>
+
+<select id="getUserByEmail" parameterType="String" resultType="User">
+	SELECT *
+	FROM users
+	WHERE userEmail = #{userEmail}
+</select>
 </mapper>

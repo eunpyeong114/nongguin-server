@@ -1,28 +1,21 @@
 package com.nongguin.model.dto;
 
-import java.util.Date;
-
 public class Friend {
 	private int friendId;
 	private int friendToUser;
 	private int friendFromUser;
-	private boolean friendisFriend;
-	private Date friendReqDate;
-	private Date friendAccDate;
-	
+	private boolean friendIsFriend;
+
 	public Friend() {
-		
+
 	}
-	
-	public Friend(int friendId, int friendToUser, int friendFromUser, boolean friendisFriend, Date friendReqDate,
-			Date friendAccDate) {
+
+	public Friend(int friendId, int friendToUser, int friendFromUser, boolean friendisFriend) {
 		super();
 		this.friendId = friendId;
 		this.friendToUser = friendToUser;
 		this.friendFromUser = friendFromUser;
-		this.friendisFriend = friendisFriend;
-		this.friendReqDate = friendReqDate;
-		this.friendAccDate = friendAccDate;
+		this.friendIsFriend = friendisFriend;
 	}
 
 	public int getFriendId() {
@@ -50,33 +43,17 @@ public class Friend {
 	}
 
 	public boolean isFriendisFriend() {
-		return friendisFriend;
+		return friendIsFriend;
 	}
 
 	public void setFriendisFriend(boolean friendisFriend) {
-		this.friendisFriend = friendisFriend;
-	}
-
-	public Date getFriendReqDate() {
-		return friendReqDate;
-	}
-
-	public void setFriendReqDate(Date friendReqDate) {
-		this.friendReqDate = friendReqDate;
-	}
-
-	public Date getFriendAccDate() {
-		return friendAccDate;
-	}
-
-	public void setFriendAccDate(Date friendAccDate) {
-		this.friendAccDate = friendAccDate;
+		this.friendIsFriend = friendisFriend;
 	}
 
 	@Override
 	public String toString() {
 		return "Friend [friendId=" + friendId + ", friendToUser=" + friendToUser + ", friendFromUser=" + friendFromUser
-				+ ", friendisFriend=" + friendisFriend + ", friendReqDate=" + friendReqDate + ", friendAccDate="
-				+ friendAccDate + "]";
+				+ ", friendisFriend=" + friendIsFriend + "]";
 	}
+
 }

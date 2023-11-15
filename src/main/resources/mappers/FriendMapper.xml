@@ -3,9 +3,39 @@
   PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.nongguin.model.dao.FriendMapper">
+
 <select id="getFriendsByFrom" parameterType="int" resultType="Friend">
 	SELECT *
 	FROM friend
 	WHERE friendFromUser = #{friendFromUser}
 </select>
+
+<select id="checkIsFriend" parameterType="Friend" resultType="Friend">
+	SELECT *
+	FROM friend
+	WHERE friendFromUser = #{friendFromUser} , friendToUser = #{friendToUser}, friendIsFriend = true
+</select>
+<insert id="insertReqByFrom" parameterType="Friend">
+	INSERT INTO friend(friendFromUser,friendToUser,friendIsFriend)
+	VALUES(#{friendFromUser},#{friendToUser},true)
+</insert>
+<insert id="insertReqByTo" parameterType="Friend">
+	INSERT INTO friend(friendFromUser,friendToUser,friendIsFriend)
+	VALUES(#{friendToUser},#{friendFromUser},false)
+</insert>
+<select id="getRequestsByUserId" parameterType="int" resultType="Friend">
+	SELECT *
+	FROM friend
+	WHERE friendFromUser = #{friendFromUser} , friendIsFriend = false
+</select>
+<update id="acceptRequest" parameterType="Friend">
+	UPDATE friend
+	SET friendIsFriend = true
+	WHERE friendFromUser = #{friendFromUser}, friendToUser = #{friendToUser}
+</update>
+<delete id="deleteRequest" parameterType="Friend">
+	DELETE FROM friend
+	WHERE friendFromUser = #{friendFromUser}, friendToUser =#{friendToUser} 
+		OR friendFromUser = #{friendToUser}, friendToUser =#{friendFromUser} 
+</delete>
 </mapper>

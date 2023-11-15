@@ -1,29 +1,28 @@
 package com.nongguin.model.dto;
 
+import java.sql.Timestamp;
 import java.util.Date;
 
 public class Match {
 	private int matchId;
-	private Date matchDate;
+	private Timestamp matchDate;
 	private int matchApplicantCnt;
 	private String matchLevel;
 	private String matchGender;
-	private int operationHourId;
 	private int courtId;
-	
+
 	public Match() {
-		
+
 	}
-	
-	public Match(int matchId, Date matchDate, int matchApplicantCnt, String matchLevel, String matchGender,
-			int operationHourId, int courtId) {
+
+	public Match(int matchId, Timestamp matchDate, int matchApplicantCnt, String matchLevel, String matchGender,
+			int courtId) {
 		super();
 		this.matchId = matchId;
 		this.matchDate = matchDate;
 		this.matchApplicantCnt = matchApplicantCnt;
 		this.matchLevel = matchLevel;
 		this.matchGender = matchGender;
-		this.operationHourId = operationHourId;
 		this.courtId = courtId;
 	}
 
@@ -39,7 +38,7 @@ public class Match {
 		return matchDate;
 	}
 
-	public void setMatchDate(Date matchDate) {
+	public void setMatchDate(Timestamp matchDate) {
 		this.matchDate = matchDate;
 	}
 
@@ -67,14 +66,6 @@ public class Match {
 		this.matchGender = matchGender;
 	}
 
-	public int getOperationHourId() {
-		return operationHourId;
-	}
-
-	public void setOperationHourId(int operationHourId) {
-		this.operationHourId = operationHourId;
-	}
-
 	public int getCourtId() {
 		return courtId;
 	}
@@ -86,9 +77,7 @@ public class Match {
 	@Override
 	public String toString() {
 		return "Match [matchId=" + matchId + ", matchDate=" + matchDate + ", matchApplicantCnt=" + matchApplicantCnt
-				+ ", matchLevel=" + matchLevel + ", matchGender=" + matchGender + ", operationHourId=" + operationHourId
-				+ ", courtId=" + courtId + "]";
+				+ ", matchLevel=" + matchLevel + ", matchGender=" + matchGender + ", courtId=" + courtId + "]";
 	}
-	
-	
+
 }

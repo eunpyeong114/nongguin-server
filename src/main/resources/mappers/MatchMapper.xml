@@ -52,8 +52,6 @@
 		WHERE matchs.matchId = (SELECT matchId FROM match_user WHERE userId =
 		#{userId})
 		AND DATEDIFF(matchs.matchDate, Now()) >=0
-		AND TIMEDIFF(SELECT operationHourStart FROM operationHour WHERE
-		operationHour.operationHourId = matchs.operationHourId,now())>=0
 	</select>
 
 	<select id="getCourtCapacity" parameterType="int"

@@ -30,7 +30,7 @@ public class PaymentServiceImpl implements PaymentService {
 			if (result <= 0)
 				return false;
 		} catch(Throwable err){
-			throw err;
+			System.out.println(err);
 		}
 		// 매치 데이터 저장
 		try {
@@ -38,7 +38,7 @@ public class PaymentServiceImpl implements PaymentService {
 			if (mResult <= 0)
 				return false;
 		} catch(Throwable err) {
-			throw err;
+			System.out.println(err);
 		}
 		// 매치_유저 중간테이블 저장
 		try {
@@ -46,7 +46,7 @@ public class PaymentServiceImpl implements PaymentService {
 			if (muResult <= 0)
 				return false;
 		} catch(Throwable err) {
-			throw err;
+			System.out.println(err);
 		}
 		return true;
 	}
