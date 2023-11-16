@@ -12,11 +12,11 @@
 	</select>
 
 	<select id="getMatchsBySearchCondition"
-		parameterType="SearchCondition" resultType="Match">
+		parameterType="SearchCondition" resultType="SearchResult">
 		SELECT *
 		FROM matchs m
-		LEFT INNER JOIN courts c
-		ON m.matchDate = #{date}
+		LEFT OUTER JOIN courts c
+		ON DATE(m.matchDate) = DATE(#{date})
 		<where>
 			<if test="region != 'none'">
 				c.courtAddress LIKE concat("%",#{region},"%")

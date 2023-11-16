@@ -18,7 +18,7 @@ CREATE TABLE IF NOT EXISTS `courts`(
     `courtAddress` VARCHAR(100) NOT NULL,
     `courtTel` VARCHAR(50) NOT NULL,
     `courtDes` VARCHAR(100) NOT NULL,
-    `courtCmatchsapacity` INT NOT NULL,
+    `courtCapacity` INT NOT NULL,
     PRIMARY KEY(`courtId`)
 )ENGINE=InnoDB DEFAULT CHARACTER SET = utf8mb4;
 
