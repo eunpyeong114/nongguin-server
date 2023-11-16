@@ -1,5 +1,9 @@
 package com.nongguin.controller;
 
+import java.io.UnsupportedEncodingException;
+import java.util.HashMap;
+import java.util.Map;
+
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,6 +20,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.nongguin.model.dto.User;
 import com.nongguin.model.service.UserService;
+import com.nongguin.util.JwtUtil;
 
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -24,9 +29,14 @@ import io.swagger.annotations.ApiOperation;
 @RequestMapping("/user")
 @Api(tags = "유저 컨트롤러")
 public class UserController {
+	private static final String SUCCESS = "success";
+	private static final String FAIL = "fail";
 
 	@Autowired
 	UserService userService;
+
+	@Autowired
+	private JwtUtil jwtUtil;
 
 	// 회원가입
 	@PostMapping("/signup")
@@ -41,15 +51,34 @@ public class UserController {
 	// 로그인
 	@PostMapping("/signin")
 	@ApiOperation("로그인")
-	public ResponseEntity<?> signIn(@RequestBody User user, HttpSession session) {
+	public ResponseEntity<Map<String, Object>> signIn(@RequestBody User user) {
+		Map<String, Object> result = new HashMap<String, Object>();
+		HttpStatus status = null;
 		User dbUser = userService.signIn(user);
-		if (dbUser == null)
-			return new ResponseEntity<Void>(HttpStatus.UNAUTHORIZED);
-		if (dbUser.getUserPass().equals(user.getUserPass())) {
-			session.setAttribute("loginUser", dbUser);
-			return new ResponseEntity<User>(dbUser, HttpStatus.ACCEPTED);
+		try {
+			if (dbUser.getUserEmail() != null || dbUser.getUserEmail().length() > 0) {
+				if (dbUser.getUserPass().equals(user.getUserPass())) {
+					result.put("access-token", jwtUtil.createToken("userEamil", dbUser.getUserEmail()));
+					result.put("message", SUCCESS);
+					status = HttpStatus.ACCEPTED;
+				}
+			} else {
+				result.put("message", FAIL);
+				status = HttpStatus.ACCEPTED;
+			}
+		} catch (UnsupportedEncodingException e) {
+			result.put("message", FAIL);
+			status = HttpStatus.INTERNAL_SERVER_ERROR;
 		}
-		return new ResponseEntity<Void>(HttpStatus.UNAUTHORIZED);
+		return new ResponseEntity<Map<String, Object>>(result, status);
+//		User dbUser = userService.signIn(user);
+//		if (dbUser == null)
+//			return new ResponseEntity<Void>(HttpStatus.UNAUTHORIZED);
+//		if (dbUser.getUserPass().equals(user.getUserPass())) {
+//			System.out.println(session.getAttribute("loginUser"));
+//			return new ResponseEntity<User>(dbUser, HttpStatus.ACCEPTED);
+//		}
+//		return new ResponseEntity<Void>(HttpStatus.UNAUTHORIZED);
 	}
 
 	// 로그아웃
@@ -71,33 +100,34 @@ public class UserController {
 	}
 
 	// 회원정보조회
-	@GetMapping("/{userId}")
+	@GetMapping("/id/{userId}")
 	@ApiOperation("회원정보조회")
-	public ResponseEntity<?> getUserByUserId(@PathVariable(value = "userId") int userId){
+	public ResponseEntity<?> getUserByUserId(@PathVariable(value = "userId") int userId) {
+		System.out.println(userId);
 		User user = userService.getUserByUserId(userId);
-		if(user==null)
+		if (user == null)
 			return new ResponseEntity<Void>(HttpStatus.NO_CONTENT);
-		return new ResponseEntity<User>(user,HttpStatus.OK);
+		return new ResponseEntity<User>(user, HttpStatus.OK);
 	}
-	
+
 	// 회원정보수정
 	@PutMapping("/{userId}")
 	@ApiOperation("비밀번호, 주소, 전화번호만 수정 가능하다")
-	public ResponseEntity<String>modifyUser(@RequestBody User user){
+	public ResponseEntity<String> modifyUser(@RequestBody User user) {
 		boolean result = userService.modifyUser(user);
-		if(!result)
-			return new ResponseEntity<String>("false",HttpStatus.NOT_ACCEPTABLE);
-		return new ResponseEntity<String>("true",HttpStatus.OK);
+		if (!result)
+			return new ResponseEntity<String>("false", HttpStatus.NOT_ACCEPTABLE);
+		return new ResponseEntity<String>("true", HttpStatus.OK);
 	}
-	
+
 	// 이메일로 유저 조회
-	@GetMapping("/{userEmail}")
+	@GetMapping("/email/{userEmail}")
 	@ApiOperation("이메일로 유저정보 조회")
-	public ResponseEntity<?>getUserByUserEmail(@PathVariable(value = "userEmail") String userEmail){
+	public ResponseEntity<?> getUserByUserEmail(@PathVariable(value = "userEmail") String userEmail) {
 		User user = userService.getUserByEmail(userEmail);
-		if(user==null)
-			return new ResponseEntity<String>("no user",HttpStatus.NO_CONTENT);
-		return new ResponseEntity<User>(user,HttpStatus.OK);
+		if (user == null)
+			return new ResponseEntity<String>("no user", HttpStatus.NO_CONTENT);
+		return new ResponseEntity<User>(user, HttpStatus.OK);
 	}
 	// 비밀번호 재등록
 }
