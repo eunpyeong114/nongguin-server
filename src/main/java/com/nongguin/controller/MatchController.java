@@ -36,10 +36,10 @@ public class MatchController {
 	@GetMapping("/search/date/{matchDate}")
 	@ApiOperation("날짜별 매치 정보 조회")
 	public ResponseEntity<?> getMatchsByDay(@PathVariable(value = "matchDate") String matchDate) {
-		List<Match> list = matchService.getMatchsByDay(matchDate);
+		List<SearchResult> list = matchService.getMatchsByDay(matchDate);
 		if (list == null || list.size() == 0)
 			return new ResponseEntity<Void>(HttpStatus.NO_CONTENT);
-		return new ResponseEntity<List<Match>>(list, HttpStatus.OK);
+		return new ResponseEntity<List<SearchResult>>(list, HttpStatus.OK);
 	}
 
 	// 검색 조건별 매치 정보 조회

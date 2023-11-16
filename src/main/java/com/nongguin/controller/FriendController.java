@@ -40,9 +40,10 @@ public class FriendController {
 
 	@Autowired
 	MatchService matchService;
-	
+
 	@Autowired
 	Match_UserService muService;
+
 	// 유저 친구 조회하기
 	@GetMapping("/list/{userId}")
 	@ApiOperation("친구 목록 조회")
@@ -81,7 +82,7 @@ public class FriendController {
 		boolean result = friendService.insertReq(friend);
 		if (result)
 			return new ResponseEntity<String>("success to request", HttpStatus.OK);
-		return new ResponseEntity<String>("fail to request",HttpStatus.NOT_ACCEPTABLE);
+		return new ResponseEntity<String>("fail to request", HttpStatus.NOT_ACCEPTABLE);
 	}
 
 	// 받은 친구 요청 조회하기
@@ -97,38 +98,42 @@ public class FriendController {
 		for (int i = 0; i < list.size(); i++) {
 			userList.add(userService.getUserByUserId(list.get(i).getFriendToUser()));
 		}
-		return new ResponseEntity<List<User>>(userList,HttpStatus.OK);
+		return new ResponseEntity<List<User>>(userList, HttpStatus.OK);
 	}
-	
+
 	// 친구 요청 수락하기
 	@PutMapping("/request/accept")
 	@ApiOperation("친구 요청 수락하기 from = 수락하는 사람 / to = 수락당하는 사람")
-	public ResponseEntity<String> acceptRequest(@RequestBody Friend friend){
+	public ResponseEntity<String> acceptRequest(@RequestBody Friend friend) {
 		boolean result = friendService.acceptRequest(friend);
-		if(!result)
+		if (!result)
 			return new ResponseEntity<String>("fail to accept", HttpStatus.NOT_ACCEPTABLE);
-		return new ResponseEntity<String>("success to accept",HttpStatus.OK);
+		return new ResponseEntity<String>("success to accept", HttpStatus.OK);
 	}
-	
+
 	// 친구 요청 거절하기
 	@DeleteMapping("/request/refuse")
 	@ApiOperation("친구 요청 거절하기")
-	public ResponseEntity<String> refuseRequest(@RequestBody Friend friend){
+	public ResponseEntity<String> refuseRequest(@RequestBody Friend friend) {
 		boolean result = friendService.refuseRequest(friend);
-		if(!result)
-			return new ResponseEntity<String>("fail to refuse",HttpStatus.NOT_ACCEPTABLE);
-		return new ResponseEntity<String>("success to refuse",HttpStatus.OK);
+		if (!result)
+			return new ResponseEntity<String>("fail to refuse", HttpStatus.NOT_ACCEPTABLE);
+		return new ResponseEntity<String>("success to refuse", HttpStatus.OK);
 	}
-	
+
 	// 친구 매치 내역 조회
 	@GetMapping("/match/{userId}")
 	@ApiOperation("친구 매치 내역 조회")
-	public ResponseEntity<?> getFriendMatch(@PathVariable(value = "userId")int userId){
-		List<Integer>matchIds = muService.getMatchIdByUserId(userId);
-		List<SearchResult>list = matchService.getRemainingMatchsByUserId(matchIds);
-		if(list ==null || list.size()==0)
+	public ResponseEntity<?> getFriendMatch(@PathVariable(value = "userId") int userId) {
+		List<Integer> matchIds = muService.getMatchIdByUserId(userId);
+		if (matchIds == null || matchIds.size() == 0)
 			return new ResponseEntity<Void>(HttpStatus.NO_CONTENT);
-		return new ResponseEntity<List<SearchResult>>(list,HttpStatus.OK);
+		
+		List<SearchResult> list = matchService.getRemainingMatchsByUserId(matchIds);
+		if (list == null || list.size() == 0)
+			return new ResponseEntity<Void>(HttpStatus.NO_CONTENT);
+		
+		return new ResponseEntity<List<SearchResult>>(list, HttpStatus.OK);
 	}
-	
+
 }

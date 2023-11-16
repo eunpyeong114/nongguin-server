@@ -8,7 +8,7 @@ import com.nongguin.model.dto.SearchResult;
 
 public interface MatchDao {
 
-	List<Match> getMatchsByDay(String matchDate);
+	List<SearchResult> getMatchsByDay(String matchDate);
 
 	List<Match> getMatchsBySearchCondition(SearchCondition condition);
 

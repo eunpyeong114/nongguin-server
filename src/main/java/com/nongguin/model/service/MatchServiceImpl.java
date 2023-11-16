@@ -15,9 +15,9 @@ import com.nongguin.model.dto.SearchResult;
 public class MatchServiceImpl implements MatchService {
 	@Autowired
 	MatchDao matchDao;
-	
+
 	@Override
-	public List<Match> getMatchsByDay(String matchDate) {
+	public List<SearchResult> getMatchsByDay(String matchDate) {
 		return matchDao.getMatchsByDay(matchDate);
 	}
 
@@ -33,8 +33,8 @@ public class MatchServiceImpl implements MatchService {
 
 	@Override
 	public List<SearchResult> getMatchsByUserId(List matchIds) {
-		List<SearchResult>result = new ArrayList<SearchResult>();
-		for(int i = 0; i<matchIds.size(); i++) {
+		List<SearchResult> result = new ArrayList<SearchResult>();
+		for (int i = 0; i < matchIds.size(); i++) {
 			SearchResult match = matchDao.getMatchByMatchId((int) matchIds.get(i));
 			result.add(match);
 		}
@@ -43,10 +43,11 @@ public class MatchServiceImpl implements MatchService {
 
 	@Override
 	public List<SearchResult> getRemainingMatchsByUserId(List matchIds) {
-		List<SearchResult>result = new ArrayList<SearchResult>();
-		for(int i = 0; i<matchIds.size(); i++) {
+		List<SearchResult> result = new ArrayList<SearchResult>();
+		for (int i = 0; i < matchIds.size(); i++) {
 			SearchResult match = matchDao.getRemainingMatchsByUserId((int) matchIds.get(i));
-			result.add(match);
+			if (match != null)
+				result.add(match);
 		}
 		return result;
 	}
