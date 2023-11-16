@@ -4,11 +4,13 @@
   "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.nongguin.model.dao.MatchDao">
 
-	<select id="getMatchsByDay" parameterType="Date"
-		resultType="Match">
+	<select id="getMatchsByDay" parameterType="String"
+		resultType="SearchResult">
 		SELECT *
-		FROM matchs
-		WHERE matchDate = #{matchDate};
+		FROM matchs m
+		LEFT OUTER JOIN courts c
+		ON m.courtId = c.courtId
+		WHERE DATE(m.matchDate) = DATE(#{matchDate});
 	</select>
 
 	<select id="getMatchsBySearchCondition"
@@ -34,28 +36,23 @@
 		ORDER BY matchDate;
 	</select>
 
-	<select id="getMatchBymatchId" parameterType="int"
-		resultType="Match">
+	<select id="getMatchByMatchId" parameterType="int"
+		resultType="SearchResult">
 		SELECT *
-		FROM matchs
-		WHERE matchId = #{matchId}
-	</select>
-
-	<select id="getMatchsByUserId" parameterType="int"
-		resultType="Match">
-		SELECT *
-		FROM matchs
-		WHERE matchs.matchId = (SELECT matchId FROM match_user WHERE userId =
-		#{userId})
+		FROM matchs m
+		LEFT OUTER JOIN courts c
+		ON m.courtId = c.courtId 
+		WHERE m.matchId = #{matchId}
 	</select>
 
 	<select id="getRemainingMatchsByUserId" parameterType="int"
-		resultType="Match">
+		resultType="SearchResult">
 		SELECT *
-		FROM matchs
-		WHERE matchs.matchId = (SELECT matchId FROM match_user WHERE userId =
-		#{userId})
-		AND DATEDIFF(matchs.matchDate, Now()) >=0
+		FROM matchs m
+		LEFT OUTER JOIN courts c
+		ON m.courtId = c.courtId
+		WHERE m.matchId = #{matchId}
+		AND DATEDIFF(matchDate, Now()) >=0
 	</select>
 
 	<select id="getCourtCapacity" parameterType="int"

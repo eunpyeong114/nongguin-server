@@ -31,20 +31,12 @@ public class FriendServiceImpl implements FriendService {
 	@Override
 	// 친구 요청
 	public boolean insertReq(Friend friend) {
-		try {
-			int fromResult = friendDao.insertReqByFrom(friend);
-			if (fromResult <= 0)
-				return false;
-		} catch (Throwable e) {
-			System.out.println(e);
-		}
-		try {
-			int toResult = friendDao.insertReqByTo(friend);
-			if (toResult <= 0)
-				return false;
-		} catch (Throwable e) {
-			System.out.println(e);
-		}
+		int fromResult = friendDao.insertReqByFrom(friend);
+		if (fromResult <= 0)
+			return false;
+		int toResult = friendDao.insertReqByTo(friend);
+		if (toResult <= 0)
+			return false;
 		return true;
 	}
 

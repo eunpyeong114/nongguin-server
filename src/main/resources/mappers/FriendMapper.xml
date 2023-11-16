@@ -26,12 +26,12 @@
 <select id="getRequestsByUserId" parameterType="int" resultType="Friend">
 	SELECT *
 	FROM friend
-	WHERE friendFromUser = #{friendFromUser} , friendIsFriend = false
+	WHERE friendFromUser = #{friendFromUser} AND friendIsFriend = false
 </select>
 <update id="acceptRequest" parameterType="Friend">
 	UPDATE friend
 	SET friendIsFriend = true
-	WHERE friendFromUser = #{friendFromUser}, friendToUser = #{friendToUser}
+	WHERE friendFromUser = #{friendFromUser} AND friendToUser = #{friendToUser}
 </update>
 <delete id="deleteRequest" parameterType="Friend">
 	DELETE FROM friend

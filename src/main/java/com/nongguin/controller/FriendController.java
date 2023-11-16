@@ -17,9 +17,11 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.nongguin.model.dto.Friend;
 import com.nongguin.model.dto.Match;
+import com.nongguin.model.dto.SearchResult;
 import com.nongguin.model.dto.User;
 import com.nongguin.model.service.FriendService;
 import com.nongguin.model.service.MatchService;
+import com.nongguin.model.service.Match_UserService;
 import com.nongguin.model.service.UserService;
 
 import io.swagger.annotations.Api;
@@ -39,6 +41,8 @@ public class FriendController {
 	@Autowired
 	MatchService matchService;
 	
+	@Autowired
+	Match_UserService muService;
 	// 유저 친구 조회하기
 	@GetMapping("/list/{userId}")
 	@ApiOperation("친구 목록 조회")
@@ -120,10 +124,11 @@ public class FriendController {
 	@GetMapping("/match/{userId}")
 	@ApiOperation("친구 매치 내역 조회")
 	public ResponseEntity<?> getFriendMatch(@PathVariable(value = "userId")int userId){
-		List<Match>list = matchService.getRemainingMatchsByUserId(userId);
+		List<Integer>matchIds = muService.getMatchIdByUserId(userId);
+		List<SearchResult>list = matchService.getRemainingMatchsByUserId(matchIds);
 		if(list ==null || list.size()==0)
-			return new ResponseEntity<String>("no content", HttpStatus.NO_CONTENT);
-		return new ResponseEntity<List<Match>>(list,HttpStatus.OK);
+			return new ResponseEntity<Void>(HttpStatus.NO_CONTENT);
+		return new ResponseEntity<List<SearchResult>>(list,HttpStatus.OK);
 	}
 	
 }

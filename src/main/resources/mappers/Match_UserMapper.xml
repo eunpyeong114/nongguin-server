@@ -7,4 +7,10 @@
 		INSERT INTO match_user(matchId, userId)
 		VALUES (#{matchId},#{userId})
 	</insert>
+	
+	<select id="getMatchIdByUserId" parameterType="int">
+		SELECT *
+		FROM match_user
+		WHERE userId = #{userId}
+	</select>
 </mapper>

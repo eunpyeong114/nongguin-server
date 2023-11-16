@@ -1,5 +1,7 @@
 package com.nongguin.model.service;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -14,6 +16,11 @@ public class Match_UserServiceImpl implements Match_UserService {
 	@Override
 	public int insertData(int userId, int matchId) {
 		return muDao.insertData(userId, matchId);
+	}
+
+	@Override
+	public List<Integer> getMatchIdByUserId(int userId) {
+		return muDao.getMatchIdByUserId(userId);
 	}
 
 }

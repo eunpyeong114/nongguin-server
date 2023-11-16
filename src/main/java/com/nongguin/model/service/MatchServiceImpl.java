@@ -1,6 +1,6 @@
 package com.nongguin.model.service;
 
-import java.util.Date;
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 import com.nongguin.model.dao.MatchDao;
 import com.nongguin.model.dto.Match;
 import com.nongguin.model.dto.SearchCondition;
+import com.nongguin.model.dto.SearchResult;
 
 @Service
 public class MatchServiceImpl implements MatchService {
@@ -16,7 +17,7 @@ public class MatchServiceImpl implements MatchService {
 	MatchDao matchDao;
 	
 	@Override
-	public List<Match> getMatchsByDay(Date matchDate) {
+	public List<Match> getMatchsByDay(String matchDate) {
 		return matchDao.getMatchsByDay(matchDate);
 	}
 
@@ -26,18 +27,28 @@ public class MatchServiceImpl implements MatchService {
 	}
 
 	@Override
-	public Match getMatchByMatchId(int matchId) {
+	public SearchResult getMatchByMatchId(int matchId) {
 		return matchDao.getMatchByMatchId(matchId);
 	}
 
 	@Override
-	public List<Match> getMatchsByUserId(int userId) {
-		return matchDao.getMatchsByUserId(userId);
+	public List<SearchResult> getMatchsByUserId(List matchIds) {
+		List<SearchResult>result = new ArrayList<SearchResult>();
+		for(int i = 0; i<matchIds.size(); i++) {
+			SearchResult match = matchDao.getMatchByMatchId((int) matchIds.get(i));
+			result.add(match);
+		}
+		return result;
 	}
 
 	@Override
-	public List<Match> getRemainingMatchsByUserId(int userId) {
-		return matchDao.getRemainingMatchsByUserId(userId);
+	public List<SearchResult> getRemainingMatchsByUserId(List matchIds) {
+		List<SearchResult>result = new ArrayList<SearchResult>();
+		for(int i = 0; i<matchIds.size(); i++) {
+			SearchResult match = matchDao.getRemainingMatchsByUserId((int) matchIds.get(i));
+			result.add(match);
+		}
+		return result;
 	}
 
 	@Override
