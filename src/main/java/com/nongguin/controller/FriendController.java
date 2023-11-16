@@ -53,9 +53,9 @@ public class FriendController {
 			friend.setFriendFromUser(friendId);
 			friend.setFriendToUser(userId);
 			// 서로 친구인지 확인
-			boolean result = friendService.checkIsFriend(friend);
+			Friend result = friendService.checkIsFriend(friend);
 			// 친구라면 리스트에 추가하기
-			if (result)
+			if (result != null)
 				FriendRel.add(friendId);
 		}
 		// 친구인 경우 리스트

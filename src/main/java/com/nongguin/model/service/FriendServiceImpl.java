@@ -23,11 +23,8 @@ public class FriendServiceImpl implements FriendService {
 
 	@Override
 	// 서로 친구인지 체크
-	public boolean checkIsFriend(Friend friend) {
-		Friend dbfriend = friendDao.checkIsFriend(friend);
-		if (dbfriend == null)
-			return false;
-		return true;
+	public Friend checkIsFriend(Friend friend) {
+		return friendDao.checkIsFriend(friend);
 	}
 
 	@Transactional

@@ -2,18 +2,18 @@
 <!DOCTYPE mapper
   PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.nongguin.model.dao.FriendMapper">
+<mapper namespace="com.nongguin.model.dao.FriendDao">
 
 <select id="getFriendsByFrom" parameterType="int" resultType="Friend">
 	SELECT *
 	FROM friend
-	WHERE friendFromUser = #{friendFromUser}
+	WHERE friendFromUser = #{friendFromUser} AND friendIsFriend=true
 </select>
 
 <select id="checkIsFriend" parameterType="Friend" resultType="Friend">
 	SELECT *
 	FROM friend
-	WHERE friendFromUser = #{friendFromUser} , friendToUser = #{friendToUser}, friendIsFriend = true
+	WHERE friendFromUser = #{friendFromUser} AND friendToUser = #{friendToUser} AND friendIsFriend = true
 </select>
 <insert id="insertReqByFrom" parameterType="Friend">
 	INSERT INTO friend(friendFromUser,friendToUser,friendIsFriend)

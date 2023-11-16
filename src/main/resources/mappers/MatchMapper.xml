@@ -16,18 +16,22 @@
 		SELECT *
 		FROM matchs m
 		LEFT OUTER JOIN courts c
-		ON DATE(m.matchDate) = DATE(#{date})
+		ON m.courtId = c.courtId
 		<where>
-			<if test="region != 'none'">
-				c.courtAddress LIKE concat("%",#{region},"%")
+			<if test="true">
+			DATE(m.matchDate) = DATE(#{date})
 			</if>
-			<if test="gender != 'none'">
+			<if test="region != 'none'">
+				AND c.courtAddress LIKE concat("%",#{region},"%")
+			</if>
+			<if test="gender != ''">
 				AND m.matchGender = #{gender}
 			</if>
 			<if test="level != 0">
 				AND m.matchLevel = #{level}
 			</if>
 		</where>
+		ORDER BY matchDate;
 	</select>
 
 	<select id="getMatchBymatchId" parameterType="int"
